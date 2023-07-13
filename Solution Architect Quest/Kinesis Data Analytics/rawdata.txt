@@ -1,0 +1,12 @@
+Wandern,Wandern_(Begriffsklärung),link,24
+Depeche_Mode,Paul_van_Dyk,link,12
+Liste_der_Mittelgebirge_in_Deutschland,Schwäbische_Alb,link,79
+other-external,Pierre_de_Fermat,external,29
+other-empty,Paul_van_Dyk,external,902
+Hochebene,Schwäbische_Alb,link,10
+Fermat-Zahl,Pierre_de_Fermat,link,25
+other-search,Thomas_Stühlmeyer,external,23
+Fränkische_Alb,Schwäbische_Alb,link,107
+other-empty,Thomas_Stühlmeyer,external,14
+Ostalbkreis,Schwäbische_Alb,link,32
+other-internal,Pierre_de_Fermat,external,46

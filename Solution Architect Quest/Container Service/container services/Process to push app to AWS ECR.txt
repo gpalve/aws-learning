@@ -1,0 +1,359 @@
+
+184034141274.dkr.ecr.us-east-1.amazonaws.com/my_app:latest
+vpc-00f76fd86102239e9
+184034141274.dkr.ecr.us-east-1.amazonaws.com/my_second_app:latest
+
+WSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ unzip container_services.zip 
+Archive:  container_services.zip
+   creating: first_app/
+  inflating: first_app/requirements.txt  
+  inflating: first_app/Dockerfile    
+  inflating: first_app/ReadMe.md     
+   creating: first_app/static/
+   creating: first_app/static/css/
+  inflating: first_app/static/css/bootstrap.min.css  
+  inflating: first_app/static/css/bootstrap-reboot.min.css.map  
+  inflating: first_app/static/css/bootstrap.css  
+  inflating: first_app/static/css/bootstrap-grid.css.map  
+  inflating: first_app/static/css/bootstrap-grid.min.css  
+  inflating: first_app/static/css/bootstrap.css.map  
+  inflating: first_app/static/css/bootstrap.min.css.map  
+  inflating: first_app/static/css/bootstrap-reboot.min.css  
+  inflating: first_app/static/css/bootstrap-reboot.css  
+  inflating: first_app/static/css/bootstrap-grid.css  
+  inflating: first_app/static/css/bootstrap-grid.min.css.map  
+  inflating: first_app/static/css/bootstrap-reboot.css.map  
+   creating: first_app/static/js/
+  inflating: first_app/static/js/bootstrap.bundle.js  
+  inflating: first_app/static/js/bootstrap.bundle.min.js.map  
+  inflating: first_app/static/js/bootstrap.bundle.js.map  
+  inflating: first_app/static/js/bootstrap.js  
+  inflating: first_app/static/js/bootstrap.bundle.min.js  
+  inflating: first_app/static/js/bootstrap.min.js  
+  inflating: first_app/static/js/bootstrap.js.map  
+  inflating: first_app/static/js/bootstrap.min.js.map  
+  inflating: first_app/app.py        
+   creating: first_app/templates/
+  inflating: first_app/templates/home.html  
+  inflating: first_app/templates/base.html  
+  inflating: first_app/templates/404.html  
+   creating: install_scripts/
+  inflating: install_scripts/install_docker.sh  
+  inflating: install_scripts/push_second_app.sh  
+   creating: second_app/
+  inflating: second_app/requirements.txt  
+  inflating: second_app/Dockerfile   
+   creating: second_app/static/
+   creating: second_app/static/css/
+  inflating: second_app/static/css/bootstrap.min.css  
+  inflating: second_app/static/css/bootstrap-reboot.min.css.map  
+  inflating: second_app/static/css/bootstrap.css  
+  inflating: second_app/static/css/bootstrap-grid.css.map  
+  inflating: second_app/static/css/bootstrap-grid.min.css  
+  inflating: second_app/static/css/bootstrap.css.map  
+  inflating: second_app/static/css/bootstrap.min.css.map  
+  inflating: second_app/static/css/bootstrap-reboot.min.css  
+  inflating: second_app/static/css/bootstrap-reboot.css  
+  inflating: second_app/static/css/bootstrap-grid.css  
+  inflating: second_app/static/css/bootstrap-grid.min.css.map  
+  inflating: second_app/static/css/bootstrap-reboot.css.map  
+   creating: second_app/static/js/
+  inflating: second_app/static/js/bootstrap.bundle.js  
+  inflating: second_app/static/js/bootstrap.bundle.min.js.map  
+  inflating: second_app/static/js/bootstrap.bundle.js.map  
+  inflating: second_app/static/js/bootstrap.js  
+  inflating: second_app/static/js/bootstrap.bundle.min.js  
+  inflating: second_app/static/js/bootstrap.min.js  
+  inflating: second_app/static/js/bootstrap.js.map  
+  inflating: second_app/static/js/bootstrap.min.js.map  
+  inflating: second_app/app.py       
+   creating: second_app/templates/
+  inflating: second_app/templates/home.html  
+  inflating: second_app/templates/base.html  
+  inflating: second_app/templates/404.html  
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ ls
+container_services.zip  first_app  install_scripts  README.md  second_app
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ ./install_scripts/install_docker.sh 
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+244 packages excluded due to repository priority protections
+Package docker-20.10.23-1.amzn2.0.1.x86_64 already installed and latest version
+Nothing to do
+Redirecting to /bin/systemctl start docker.service
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ cls
+bash: cls: command not found
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ region=$(aws configure get region)
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ region
+bash: region: command not found
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ region=${region:-us-east-1}
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ repo_name="my_app"
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ account=$(aws sts get-caller-identity --query Account --output text)
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ fullname="${account}.dkr.ecr.${region}.amazonaws.com/${repo_name}:latest"
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ echo $region
+us-east-1
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ echo $repo_name
+my_app
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ aws ecr create-repository --repository-name "${repo_name}"
+{
+    "repository": {
+        "repositoryUri": "184034141274.dkr.ecr.us-east-1.amazonaws.com/my_app", 
+        "imageScanningConfiguration": {
+            "scanOnPush": false
+        }, 
+        "encryptionConfiguration": {
+            "encryptionType": "AES256"
+        }, 
+        "registryId": "184034141274", 
+        "imageTagMutability": "MUTABLE", 
+        "repositoryArn": "arn:aws:ecr:us-east-1:184034141274:repository/my_app", 
+        "repositoryName": "my_app", 
+        "createdAt": 1688037987.0
+    }
+}
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ aws ecr get-login-password --region ${region}|docker login --username AWS --password-stdin ${fullname}
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ ls
+container_services.zip  first_app  install_scripts  README.md  second_app
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment $ cd first_app/
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker build  -t ${repo_name}
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker build -t ${repo_name}
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ ls
+app.py  Dockerfile  ReadMe.md  requirements.txt  static  templates
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker build -t ${repo_name} .
+Sending build context to Docker daemon   3.04MB
+Step 1/7 : FROM python:3.8-slim-buster
+3.8-slim-buster: Pulling from library/python
+8b91b88d5577: Pull complete 
+824416e23423: Pull complete 
+8f777578c172: Pull complete 
+cbfea27109a8: Pull complete 
+276dfcf5deff: Pull complete 
+Digest: sha256:8799b0564103a9f36cfb8a8e1c562e11a9a6f2e3bb214e2adc23982b36a04511
+Status: Downloaded newer image for python:3.8-slim-buster
+ ---> addd6962740a
+Step 2/7 : MAINTAINER Your Name "test@test.com"
+ ---> Running in 6567ce13b874
+Removing intermediate container 6567ce13b874
+ ---> f13c02e55cab
+Step 3/7 : COPY ./ ./app
+ ---> ecd819b1dca8
+Step 4/7 : WORKDIR ./app
+ ---> Running in 579d7a7c98e7
+Removing intermediate container 579d7a7c98e7
+ ---> cdeb10e8d66b
+Step 5/7 : COPY ./requirements.txt /app/requirements.txt
+ ---> 5381249f8cbc
+Step 6/7 : RUN pip3 install -r requirements.txt
+ ---> Running in 9f9810f7d80f
+Collecting click==8.0.1
+  Downloading click-8.0.1-py3-none-any.whl (97 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 15.4 MB/s eta 0:00:00
+Collecting Flask==2.0.1
+  Downloading Flask-2.0.1-py3-none-any.whl (94 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.8/94.8 kB 20.2 MB/s eta 0:00:00
+Collecting itsdangerous==2.0.1
+  Downloading itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting Jinja2==3.0.1
+  Downloading Jinja2-3.0.1-py3-none-any.whl (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.7/133.7 kB 26.2 MB/s eta 0:00:00
+Collecting MarkupSafe==2.0.1
+  Downloading MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (30 kB)
+Collecting Werkzeug==2.0.1
+  Downloading Werkzeug-2.0.1-py3-none-any.whl (288 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 288.2/288.2 kB 36.8 MB/s eta 0:00:00
+Installing collected packages: Werkzeug, MarkupSafe, itsdangerous, click, Jinja2, Flask
+Successfully installed Flask-2.0.1 Jinja2-3.0.1 MarkupSafe-2.0.1 Werkzeug-2.0.1 click-8.0.1 itsdangerous-2.0.1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 23.0.1 -> 23.1.2
+[notice] To update, run: pip install --upgrade pip
+Removing intermediate container 9f9810f7d80f
+ ---> ba85d094115b
+Step 7/7 : CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8443"]
+ ---> Running in 09af2da8272d
+Removing intermediate container 09af2da8272d
+ ---> 54da7b08a0bd
+Successfully built 54da7b08a0bd
+Successfully tagged my_app:latest
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker -images
+unknown shorthand flag: 'i' in -images
+See 'docker --help'.
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default "/home/ec2-user/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/home/ec2-user/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/home/ec2-user/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/home/ec2-user/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  builder     Manage builds
+  buildx*     Docker Buildx (Docker Inc., 0.0.0+unknown)
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+
+To get more help with docker, check out our guides at https://docs.docker.com/go/guides/
+
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker images
+REPOSITORY   TAG               IMAGE ID       CREATED          SIZE
+my_app       latest            54da7b08a0bd   52 seconds ago   132MB
+python       3.8-slim-buster   addd6962740a   3 weeks ago      118MB
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker tag ${repo_name} ${fullname}
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ docker push ${fullname}
+The push refers to repository [184034141274.dkr.ecr.us-east-1.amazonaws.com/my_app]
+421ad012acf7: Pushed 
+959ec6a46f35: Pushed 
+e4b17833be23: Pushed 
+e6c5004ee77f: Pushed 
+997b8e79e84f: Pushed 
+3054512b6f71: Pushed 
+ae2d55769c5e: Pushed 
+e2ef8a51359d: Pushed 
+latest: digest: sha256:27dacf5cc6680d10004b3c4d299c9b8cdb852d99c7cb9a190b12b921bba7e7a5 size: 1998
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/first_app $ cd ~/environment/install_scripts/
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/install_scripts $ ./push_second_app.sh
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+Sending build context to Docker daemon  3.038MB
+Step 1/7 : FROM python:3.8-slim-buster
+ ---> addd6962740a
+Step 2/7 : MAINTAINER Your Name "awsashok@amazon.com"
+ ---> Running in 8fa105cac11b
+Removing intermediate container 8fa105cac11b
+ ---> 51b5f913ceeb
+Step 3/7 : COPY ./ ./app
+ ---> 33eab72ba31d
+Step 4/7 : WORKDIR ./app
+ ---> Running in 746af5f8653f
+Removing intermediate container 746af5f8653f
+ ---> 8a81264af97e
+Step 5/7 : COPY ./requirements.txt /app/requirements.txt
+ ---> c01b79e0e9b7
+Step 6/7 : RUN pip3 install -r requirements.txt
+ ---> Running in e55a2ca0f696
+Collecting click==8.0.1
+  Downloading click-8.0.1-py3-none-any.whl (97 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.4/97.4 kB 16.4 MB/s eta 0:00:00
+Collecting Flask==2.0.1
+  Downloading Flask-2.0.1-py3-none-any.whl (94 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.8/94.8 kB 20.4 MB/s eta 0:00:00
+Collecting itsdangerous==2.0.1
+  Downloading itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting Jinja2==3.0.1
+  Downloading Jinja2-3.0.1-py3-none-any.whl (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.7/133.7 kB 26.3 MB/s eta 0:00:00
+Collecting MarkupSafe==2.0.1
+  Downloading MarkupSafe-2.0.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (30 kB)
+Collecting Werkzeug==2.0.1
+  Downloading Werkzeug-2.0.1-py3-none-any.whl (288 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 288.2/288.2 kB 45.1 MB/s eta 0:00:00
+Installing collected packages: Werkzeug, MarkupSafe, itsdangerous, click, Jinja2, Flask
+Successfully installed Flask-2.0.1 Jinja2-3.0.1 MarkupSafe-2.0.1 Werkzeug-2.0.1 click-8.0.1 itsdangerous-2.0.1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 23.0.1 -> 23.1.2
+[notice] To update, run: pip install --upgrade pip
+Removing intermediate container e55a2ca0f696
+ ---> 2bf1a68640fd
+Step 7/7 : CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8443"]
+ ---> Running in c6bbf34cf489
+Removing intermediate container c6bbf34cf489
+ ---> 28952cbd99b0
+Successfully built 28952cbd99b0
+Successfully tagged my_second_app:latest
+The push refers to repository [184034141274.dkr.ecr.us-east-1.amazonaws.com/my_second_app]
+cf78f4334b6d: Pushed 
+e632f54ad302: Pushed 
+4303b1afe94f: Pushed 
+e6c5004ee77f: Pushed 
+997b8e79e84f: Pushed 
+3054512b6f71: Pushed 
+ae2d55769c5e: Pushed 
+e2ef8a51359d: Pushed 
+latest: digest: sha256:de384fcb2bf21203b39828c7a0a4da27f4e65d3d9cc5e662d62c646a9c5222dc size: 1998
+AWSLabsUser-me98cEZAApeFHq2o3c7BZ6:~/environment/install_scripts $ 
